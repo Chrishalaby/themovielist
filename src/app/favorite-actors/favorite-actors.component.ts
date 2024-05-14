@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
@@ -18,23 +18,17 @@ export class FavoriteActorsComponent implements OnInit {
 
   constructor(
     private favoriteActorsService: FavoriteActorsService,
-    private messageService: MessageService,
-    private cdr: ChangeDetectorRef
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
-    this.loadFavorites();
-    this.cdr.detectChanges();
-  }
-
-  loadFavorites() {
-    this.favoriteActors = this.favoriteActorsService.getFavorites();
+    this.favoriteActorsService.favoriteActors$.subscribe((actors) => {
+      this.favoriteActors = actors;
+    });
   }
 
   removeFavorite(actorId: number) {
     this.favoriteActorsService.removeFavorite(actorId);
-    this.loadFavorites();
-    this.cdr.detectChanges();
     this.messageService.add({
       severity: 'success',
       summary: 'Success',

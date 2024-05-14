@@ -89,11 +89,11 @@ export class ActorSearchComponent implements OnInit {
 
   addFavorite(actor: any) {
     this.favoriteActorsService.addFavorite(actor);
-    this.cdr.detectChanges();
     this.messageService.add({
       severity: 'success',
       summary: 'Success',
       detail: 'Actor added to favorites',
     });
+    this.cdr.detectChanges();
   }
 }

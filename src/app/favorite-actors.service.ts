@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
@@ -6,6 +7,10 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class FavoriteActorsService {
   private storageKey = 'favoriteActors';
+  private favoriteActorsSubject = new BehaviorSubject<any[]>(
+    this.getFavorites()
+  );
+  favoriteActors$ = this.favoriteActorsSubject.asObservable();
 
   constructor(private localStorageService: LocalStorageService) {}
 
@@ -22,6 +27,7 @@ export class FavoriteActorsService {
         this.storageKey,
         JSON.stringify(favorites)
       );
+      this.favoriteActorsSubject.next(favorites);
     }
   }
 
@@ -32,5 +38,6 @@ export class FavoriteActorsService {
       this.storageKey,
       JSON.stringify(favorites)
     );
+    this.favoriteActorsSubject.next(favorites);
   }
 }
