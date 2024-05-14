@@ -1,0 +1,16 @@
+.search-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.actors-gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.actor-item {
+  margin: 10px;
+  text-align: center;
+}

@@ -1,0 +1,44 @@
+<p-toast></p-toast>
+<div class="search-container">
+  <input
+    type="text"
+    pInputText
+    [(ngModel)]="query"
+    placeholder="Search for actors..."
+  />
+  <p-button
+    type="button"
+    label="Search"
+    icon="pi pi-search"
+    (click)="searchActors()"
+  ></p-button>
+</div>
+
+<p-carousel
+  *ngIf="actors.length > 0"
+  [value]="actors"
+  [numVisible]="3"
+  [numScroll]="3"
+  [circular]="true"
+  [responsiveOptions]="responsiveOptions"
+>
+  <ng-template pTemplate="item" let-actor>
+    <div class="actor-item">
+      <img
+        [src]="'https://image.tmdb.org/t/p/w200' + actor.profile_path"
+        alt="{{ actor.name }}"
+        (click)="selectActor(actor)"
+      />
+      <h3>{{ actor.name }}</h3>
+      <p-button
+        type="button"
+        icon="pi pi-heart"
+        (click)="addFavorite(actor)"
+      ></p-button>
+      <p>Popular Movies:</p>
+      <ul>
+        <li *ngFor="let movie of actor.known_for">{{ movie.title }}</li>
+      </ul>
+    </div>
+  </ng-template>
+</p-carousel>
